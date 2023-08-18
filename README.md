@@ -2,7 +2,7 @@ ANALISIS PREVIAJE CON PYTHON USANDO GOOGLE COLAB:
 En este analisis usaremos datasets de ediciones de años anteriores del programa nacional de Previaje.
 participantes:
 
-github.com/arianracca
+https://github.com/arianracca
 
 https://github.com/giaaaBiEi8
 
