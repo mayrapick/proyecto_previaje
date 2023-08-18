@@ -1,0 +1,104 @@
+"""
+las resoluciones se encuentran ejecutadas paso a paso anteriormente a lo largo
+del desarrollo del programa.
+NOTA: Se decidió unificar el criterio de nominación de funciones a camelCase
+aún cuando algunos enunciados pedían funciones en snake_case.
+"""
+
+
+#ETAPA 1
+print("-----------------------------------")
+print("ETAPA 1")
+#Leer el archivo 'coordenadas_provincias.csv'
+lista_provincias_coordenadas = openFile('coordenadas_provincias.csv')
+
+#Crear la función listToDict que se encarga de convertir los datos leídos a una lista de diccionarios.
+#Llamar a la función anterior con los datos del archivo leído y verificar que devuelva lo pedido.
+diccionario_provincias = listToDict(lista_provincias_coordenadas)
+print("SE PASA DE LISTA A DICCIONARIO LAS PROVINCIAS Y SUS COORDENADAS")
+print(diccionario_provincias)
+print()
+
+#Crear el constructor de la clase 'Provincia'
+#Crear un objeto de la clase 'Provincia'
+#Se imprimen todas las provincias de Argentina con sus coordenadas por iteración
+print("CREANDO OBJETOS PROVINCIA")
+for nombre, coordenadas in diccionario_provincias.items():
+  provincia = Provincia(nombre, coordenadas) # crea el objeto como instancia de la clase
+  print(provincia)
+print()
+#Se imprime una provincia inventada en función de una creación individual
+mordor = Provincia('Mordor', (-35,150))
+print("CREANDO UN OBJETO PROVINCIA INVENTADO")
+print(mordor)
+print()
+
+#ETAPA 2
+print("-----------------------------------")
+print("ETAPA 2")
+#Leer el archivo 'previaje.csv'
+lista_viajes = openFile('Copia de viajes_origen_destino_mes.csv')
+
+#Proponer una estructuras de datos para trabajar cada uno de los dataset.
+viajes = diccionarioViajes(lista_viajes)
+print("SE PASA DE LISTA A DICCIONARIO DE VIAJES")
+print(viajes)
+print()
+
+#Crear el constructor de la clase 'Viaje'
+#Crear un objeto de la clase 'Viaje'
+viaje = Viaje(2022-12, 'Chubut', 'Santa Fe', 20, 20, 'Previaje 2') # crea el objeto como instancia de la clase
+print("SE CREA UN OBJETO VIAJE")
+print(viaje)
+print()
+
+#Crear una función 'datos_relevantes' que sólo devuelva (con la misma estructura de datos que se está trabajando) los datos de determinados encabezados pasados como parámetros.
+viajes_edicion = datosRelevantes(lista_viajes, "viajes", "edicion")
+print("SE FILTRAN LOS ENCABEZADOS VIAJES Y EDICION")
+print(viajes_edicion)
+print()
+
+#Crear una función 'mas_viajeros' que calcule cual fue la provincia que más viajeros recibio, en un mes y año indicados como parámetros.
+#ejemplo de uso, se imprime por iteración los resultados para todos los meses de 2022
+print("SE OBTIENEN LAS PROVINCIAS CON MÁS VIAJEROS EN CADA MES DE 2022")
+for mes in range(1, 13):
+  provincia = masViajeros(lista_viajes, mes, 2022)
+  print(f"Provincia con más viajeros en {mes}/2022: {provincia}")
+print()
+
+#ejemplo de uso, caso en que no hay datos para cierto mes (10-2023)
+provincia = masViajeros(lista_viajes, 10, 2023)
+print("SE VERIFICA LA RESPUESTA AL NO HABER DATOS")
+print(f"Provincia con más viajeros en 10/2023: {provincia}")
+
+#Crear una función 'calcular_promedio' que calcule el promedio de viajeros por viaje en una provincia de origen especifica.
+# creamos una lista de provincias para aplicar el promedio
+provincias = []
+for elemento in lista_viajes:
+  provincia_origen = elemento[1]
+  # se agrega a la lista solo una vez cada provincia
+  if provincia_origen not in provincias:
+      provincias.append(provincia_origen)
+print()
+
+print("SE OBTIENEN LOS PROMEDIOS DE VIAJEROS POR VIAJE EN CADA PROVINCIA DE ARGENTINA")
+# ejemplos iterando cada provincia
+for provincia in provincias:
+    promedio = calcularPromedio(lista_viajes, provincia)
+    print(f"Promedio de viajeros por viaje en {provincia}: {promedio}")
+print()
+
+# ETAPA 3
+print("-----------------------------------")
+print("ETAPA 3")
+# Usar los datos del archivo 'previaje.csv' para cargar una estructura de datos que consideren adecuada los datos que consideren pertinentes para responder la siguiente pregunta: ¿cuántos viajes fueron realizados en cada edición del programa PreViaje?
+# filtramos los encabezados relevantes: viajes y edicion
+viajes_edicion = datosRelevantes(lista_viajes, "viajes", "edicion")
+viajes_por_edicion = calcularViajesPorEdicion(viajes_edicion)
+print("SE CREA DICCIONARIO CON CLAVE EDICION Y VALOR VIAJES, CALCULANDO EL TOTAL DE VIAJES POR EDICION")
+print(viajes_por_edicion)
+print()
+
+# Realizar un gráfico de torta que muestre los porcentajes de viajes correspondientes a cada edición, sobre el total de viajes del programa completo. Para ello deberán usar los módulos matplotlib y seaborn.
+print("SE CREA UN GRÁFICO CON LOS PORCENTAJES DE VIAJES SOBRE EL TOTAL CORRESPONDIENTE A CADA EDICIÓN")
+crearGrafico(viajes_por_edicion)
